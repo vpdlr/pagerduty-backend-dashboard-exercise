@@ -104,6 +104,6 @@ Service with more incidents, breakdown of incidents by status
 
 ## Features
 
-Synchronize data from PagerDuty
-Access data through API endpoints for services, incidents, teams, and escalation policies
-Generate CSV reports for services, incidents, teams, and escalation policies
+- Synchronize data from PagerDuty
+- Access data through API endpoints for services, incidents, teams, and escalation policies
+- Generate CSV reports for services, incidents, teams, and escalation policies
