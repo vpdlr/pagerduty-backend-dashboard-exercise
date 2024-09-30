@@ -44,7 +44,7 @@ docker-compose up --build
 
 ### Without Docker
 
-1. *** Run the application:***
+1. **Run the application:**
 
 ```bash
 flask run
@@ -102,7 +102,7 @@ Service with more incidents, breakdown of incidents by status
 
 `GET /api/dashboard/analysis/service_with_most_incidents`
 
-## Features
+## Features
 
 Synchronize data from PagerDuty
 Access data through API endpoints for services, incidents, teams, and escalation policies
