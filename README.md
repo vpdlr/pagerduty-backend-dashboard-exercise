@@ -42,7 +42,7 @@ pip install -r requirements.txt
 docker-compose up --build
 ```
 
-### Without Docker
+### Without Docker
 
 1. *** Run the application:***
 
