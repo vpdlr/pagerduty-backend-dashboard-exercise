@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql+pymysql://root:root@db/pagerduty_db
+      PAGERDUTY_API_KEY: u+b4CCjDZsXfuxx-w_fw
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pagerduty_db
+    ports:
+      - "3306:3306"
