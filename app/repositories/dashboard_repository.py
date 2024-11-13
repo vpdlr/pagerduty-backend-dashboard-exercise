@@ -1,4 +1,4 @@
-from ..models import Service, Incident, Team, EscalationPolicy
+from ..models import Service, Incident, Team, EscalationPolicy, User, Schedule
 from ..db import db
 
 class DashboardRepository:
@@ -50,6 +50,14 @@ class DashboardRepository:
             .filter(Incident.service_id == service_id)
             .with_entities(Incident.status, db.func.count(Incident.id).label('incident_count'))
             .group_by(Incident.status)
+            .all()
+        )
+    
+    def get_inactive_users(self):
+        """Retrieve users who are not assigned to any schedule."""
+        return (
+            User.query.outerjoin(User.schedules)
+            .filter(Schedule.id == None)          # Filter for users with no schedule
             .all()
         )
 

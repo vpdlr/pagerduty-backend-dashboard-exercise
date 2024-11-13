@@ -62,25 +62,25 @@ flask sync-pagerduty
 
 This command will fetch and store the latest data from the PagerDuty API into the database.
 
-## API Endpoints
+## API Endpoints
 
 You can access the following endpoints to get data:
 
-### Dashboard Data Endpoints
+### Dashboard Data Endpoints
 
 These endpoints provide access to various dashboard data:
 
 `GET /api/dashboard/services`
 
-`GET /api/dashboard/incidents-per-service`
+`GET /api/dashboard/incidents/per-service`
 
-`GET /api/dashboard/incidents-by-service-and-status`
+`GET /api/dashboard/incidents/by-service-and-status`
 
 `GET /api/dashboard/teams`
 
 `GET /api/dashboard/escalation-policies`
 
-### CSV Report Endpoints
+### CSV Report Endpoints
 
 Generate CSV reports for different datasets:
 
@@ -94,13 +94,25 @@ Generate CSV reports for different datasets:
 
 `GET /api/dashboard/report/csv/escalation_policies`
 
-#### Analysis Endpoints 
+### Analysis Endpoints 
 
 Perform analysis on the data: 
 
 Service with more incidents, breakdown of incidents by status
 
-`GET /api/dashboard/analysis/service_with_most_incidents`
+`GET /api/dashboard/analysis/service-most-incidents`
+
+Analysis of inactive users
+
+`GET /api/dashboard/analysis/inactive-users`
+
+#### Analysis Graph
+
+Graph of: Service with more incidents, breakdown of incidents by status
+
+`GET /api/dashboard/analysis/service-most-incidents/graph`
+
+
 
 ## Features
 

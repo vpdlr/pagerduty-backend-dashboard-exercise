@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, make_response
 from .services.dashboard_service import DashboardService
 from .services.report_service import ReportService
+from .services.analysis_service import AnalysisService
 
 dashboard_bp = Blueprint('dashboard', __name__, url_prefix='/api/dashboard')
 dashboard_service = DashboardService()
@@ -56,19 +57,31 @@ def generate_report(report_type):
     
 
 # Get analysis of: service with more incidents, breakdown of incidents by status
-@dashboard_bp.route('/analysis', methods=['GET'])
+@dashboard_bp.route('/analysis/service-most-incidents', methods=['GET'])
 def get_analysis():
-    service_info = dashboard_service.get_service_with_most_incidents()
-    
-    if service_info:
-        service_id = service_info["service_id"]
-        incident_breakdown = dashboard_service.get_incident_breakdown_by_status(service_id)
-        
-        return jsonify({
-            "service_with_most_incidents": service_info,
-            "incident_breakdown": incident_breakdown
-        }), 200
+    analysis_service = AnalysisService(dashboard_service)
+    analysis_data = analysis_service.get_service_with_incident_breakdown()
 
-    return jsonify({
-        "message": "No incidents found."
-    }), 404
+    if analysis_data:
+        return jsonify(analysis_data), 200
+    return jsonify({"message": "No service found."}), 404
+
+@dashboard_bp.route('/analysis/service-most-incidents/graph', methods=['GET'])
+def get_incident_breakdown_graph():
+    analysis_service = AnalysisService(dashboard_service)
+    graph_html = analysis_service.generate_incident_breakdown_html()
+
+    if graph_html:
+        return make_response(graph_html), 200, {"Content-Type": "text/html"}
+    
+    return jsonify({"message": "No incidents found to generate graph."}), 404
+
+# Get analysis of inactive users
+@dashboard_bp.route('/analysis/inactive-users', methods=['GET'])
+def get_inactive_users():
+    analysis_service = AnalysisService(dashboard_service)
+    inactive_users_data = analysis_service.get_inactive_users()
+
+    if inactive_users_data["inactive_users"]:
+        return jsonify(inactive_users_data), 200
+    return jsonify({"message": "No inactive users found."}), 404

@@ -69,3 +69,7 @@ class DashboardService:
             {"status": row.status.value, "incident_count": row.incident_count}
             for row in results
         ]
+    
+    def get_inactive_users(self):
+        results = self.repository.get_inactive_users()
+        return results

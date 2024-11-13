@@ -47,3 +47,9 @@ class PagerDutyService:
 
     async def fetch_escalation_policies(self):
         return await self.fetch_list('escalation_policies')
+    
+    async def fetch_users(self):
+        return await self.fetch_list('users')
+
+    async def fetch_schedules(self):
+        return await self.fetch_list('schedules')

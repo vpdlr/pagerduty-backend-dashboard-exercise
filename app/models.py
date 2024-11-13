@@ -17,6 +17,13 @@ escalation_policy_service_association = db.Table(
     db.Column('service_id', db.String(36), db.ForeignKey('services.id'), primary_key=True)
 )
 
+# Association table for the users and schedules relationship 
+user_schedule_association = db.Table(
+    'user_schedule',
+    db.Column('user_id', db.String(36), db.ForeignKey('users.id'), primary_key=True),
+    db.Column('schedule_id', db.String(36), db.ForeignKey('schedules.id'), primary_key=True)
+)
+
 class Service(db.Model):
     __tablename__ = 'services'
 
@@ -69,5 +76,25 @@ class EscalationPolicy(db.Model):
 
     def __repr__(self):
         return f"<EscalationPolicy(id={self.id})>"
+    
+
+class User(db.Model):
+    __tablename__ = 'users'
+    
+    id = db.Column(db.String(36), primary_key=True)
+    schedules = db.relationship('Schedule', secondary=user_schedule_association, back_populates='users')
+
+    def __repr__(self):
+        return f"<User(id={self.id})>"
+
+
+class Schedule(db.Model):
+    __tablename__ = 'schedules'
+    
+    id = db.Column(db.String(36), primary_key=True)
+    users = db.relationship('User', secondary=user_schedule_association, back_populates='schedules')
+
+    def __repr__(self):
+        return f"<Schedule(id={self.id})>"
 
 
